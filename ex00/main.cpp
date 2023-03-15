@@ -138,8 +138,10 @@ int print_res2(std::string s, std::vector<std::string> data, std::vector<std::st
 			{
 				std::string sub2 = data[i].substr(8, 1);
 				std::string sub = s.substr(8, 1);
-				int res1 = stoi(sub);
-				int res2 = stoi(sub2);
+				std::string sub4 = data[i].substr(8, 2);
+				std::string sub3 = s.substr(8, 2);
+				int res1 = stoi(sub3);
+				int res2 = stoi(sub4);
 				int res = res1 - res2;
 				if (res < 0)
 					res = res * -1;
