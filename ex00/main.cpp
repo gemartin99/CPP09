@@ -75,9 +75,16 @@ int check_num(std::string str)
 		i++;
 	}
 	i = i + 2;
+	int j = i;
+	while (str[j])
+	{
+		if (str[j] == '-')
+			return (-1);
+		j++;
+	}
 	char *s = &str[i];
-	if (s[i] == '-')
-		return (-1);
+	// if (s[i] == '-')
+	// 	return (-1);
 	if (check_more_than_one('.', s) == -1)
 		return (-3);
 	if (check_digits(s) == -1)
@@ -111,6 +118,76 @@ int check_errors(std::string s)
 	return (-1);
 }
 
+int print_res2(std::string s, std::vector<std::string> data, std::vector<std::string> value)
+{
+	unsigned int i = 0;
+	int better = 0;
+	int diff;
+	std::string sub = s.substr(0, 4);
+	//std::cout << sub << std::endl;
+	while (i < data.size())
+	{
+		std::string sub2 = data[i].substr(0, 4);
+		// std::cout << sub << std::endl;
+		// 	std::cout << sub2 << std::endl;
+		if (sub == sub2)
+		{
+			std::string sub2 = data[i].substr(5, 2);
+			std::string sub = s.substr(5, 2); 
+			if (sub == sub2)
+			{
+				std::string sub2 = data[i].substr(8, 1);
+				std::string sub = s.substr(8, 1);
+				int res1 = stoi(sub);
+				int res2 = stoi(sub2);
+				int res = res1 - res2;
+				if (res < 0)
+					res = res * -1;
+				if (res < diff)
+				{
+					diff = res;
+					better = i;
+				}
+				if (sub == sub2)
+				{
+					std::string sub2 = data[i].substr(9, 1);
+					std::string sub = s.substr(9, 1);
+					int res1 = stoi(sub);
+					int res2 = stoi(sub2);
+
+					int res = res1 - res2;
+					if (res < 0)
+						res = res * -1;
+					if (res < diff)
+					{
+						diff = res;
+						better = i;
+					}
+
+				}
+			}
+		}
+		i++;
+	}
+	std::string s1 = "|";
+	std::string s2 = "=>";
+	std::size_t found = s.find(s1);
+	s.erase(found, s1.length());
+	s.insert(found, s2);
+	//std::string res_s = s.substr(0, 14);
+	std::cout << s << " = "; //<< std::endl;
+	int x = 12;
+	while (s[x] && s[x] != ' ')
+		x++;
+	x++;
+	std::string sub2 = s.substr(x, s.length() - x);
+	float res1 = stof(sub2);
+	float res2 = stof(value[better]);
+	float res = res1 * res2;
+	std::cout << res << std::endl;
+	return (0);
+}
+
 int print_res(std::string s, std::vector<std::string> data, std::vector<std::string> value)
 {
 	std::string sub = s.substr(0, 10);
@@ -124,8 +201,8 @@ int print_res(std::string s, std::vector<std::string> data, std::vector<std::str
 			std::size_t found = s.find(s1);
 			s.erase(found, s1.length());
 			s.insert(found, s2);
-			std::string res_s = s.substr(0, 14);
-			std::cout << res_s; //<< std::endl;
+			//std::string res_s = s.substr(0, 14);
+			std::cout << s << " = ";
 			int x = 12;
 			while (s[x] && s[x] != ' ')
 				x++;
@@ -135,7 +212,7 @@ int print_res(std::string s, std::vector<std::string> data, std::vector<std::str
 			float res2 = stof(value[i]);
 			float res = res1 * res2;
 			std::cout << res << std::endl;
-			break;
+			return (1);
 		}
 	}
 	return (0);
@@ -170,7 +247,10 @@ int main(int argc, char **argv)
 		while(getline(file, line))
 		{
 			if (check_errors(line) == 0)
-				print_res(line, date, value);
+			{
+				if (print_res(line, date, value) == 0)
+					print_res2(line, date, value);
+			}
 		}
 	}
 	else
