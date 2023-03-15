@@ -1,4 +1,4 @@
-NAME = program
+NAME = btc
 
 DEL_LINE =		\033[2K
 ITALIC =		\033[3m
