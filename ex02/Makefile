@@ -20,9 +20,9 @@ MID_GRAY =		\033[38;5;245m
 DARK_GREEN =	\033[38;2;75;179;82m
 DARK_YELLOW =	\033[38;5;143m
 
-SRCS = main.cpp 
+SRCS = main.cpp PmergeMe.cpp
 
-INCLUDE = 
+INCLUDE = PmergeMe.hpp
 CC = c++
 RM = rm -f
 CFLAGS = -Wall -Wextra -Werror -std=c++98 -MMD 

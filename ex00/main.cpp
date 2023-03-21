@@ -2,6 +2,7 @@
 #include <fstream>
 #include <string>
 #include <vector>
+#include "BitcoinExchange.hpp"
 
 static bool is_digits(std::string &str)
 {
@@ -242,6 +243,8 @@ int main(int argc, char **argv)
 			value.push_back(value_res);
 		}
 	}
+	else
+		write_error("Error: could not open file.");
 	std::ifstream file(argv[1]);
 	std::string line;
 	if (file.is_open())

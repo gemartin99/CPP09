@@ -2,6 +2,8 @@
 #include <stack>
 #include <string>
 
+#include "RPN.hpp"
+
 void write_error(std::string s)
 {
     std::cout << s << std::endl;
@@ -23,6 +25,28 @@ float rev_polish(std::string s)
             write_error("Error");
         else if (!isdigit(s[i]))
             j = 0;
+    }
+    i = -1;
+    j = 0;
+    while (s[++i])
+    {
+        if (isdigit(s[i]))
+            j++;
+        if (j == 2)
+        {
+            while(s[++i])
+            {
+                if (isdigit(s[i]))
+                    write_error("Error");
+                else if (s[i] == '/' || s[i] == '+' || s[i] == '-' || s[i] == '*')
+                {
+                    j = 0;
+                    break ;
+                }
+            }
+            if (j == 2)
+                write_error("Error");
+        }
     }
     for (unsigned int i = 0; i < s.size(); i++)
     {
@@ -71,12 +95,11 @@ float rev_polish(std::string s)
 
 int main(int argc, char* argv[])
 {
-    if (argc < 2)
+    if (argc != 2)
     {
         std::cout << "Error" << std::endl;
         return 1;
     }
-
     std::string s = argv[1];
     float res = rev_polish(s);
     std::cout << res << std::endl;
